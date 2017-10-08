@@ -4,7 +4,8 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue; 
-  
+
+
 public class CalcStr {  
   
     static String operator = "+-*/%^()slrL";    
@@ -16,7 +17,7 @@ public class CalcStr {
         StringBuffer sb = new StringBuffer(str);  
         for (int i = 0; i < sb.length(); i++) {  
             char c = sb.charAt(i);  
-            if (operator.indexOf(c) >= 0) {  
+            if (operator.indexOf(c) >= 0&&operator.indexOf(c)<=6) {  
                 if (i == 0) {  
                     sb.insert(0, '0');  
                     i++;  
@@ -26,12 +27,11 @@ public class CalcStr {
                 }  
             }
         }
-        
         str=sb.toString();
         str=str.replace("sin(", "s");
         str=str.replace("㏑(", "l");
         str=str.replace("√(", "r");
-        str=str.replace("lg(", "L");
+        str=str.replace("lg(", "L"); 
         return str;
     }   
     public static int opcompare(char op1, char op2) {  
@@ -81,6 +81,7 @@ public class CalcStr {
                     break;
                 case 's':
                 	stack.push(c);
+                	break;
                 case 'l':
                 	stack.push(c);
                 	break;
