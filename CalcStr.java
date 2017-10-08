@@ -9,10 +9,10 @@ public class CalcStr {
   
     static String operator = "+-*/%^()s";    
     public static String pretreatment(String str) {
-    	str=str.replace("¡Â", "/");
-    	str=str.replaceAll("¡Á", "*");
+    	str=str.replace("?", "/");
+    	str=str.replaceAll("?", "*");
     	str=str.replace("e", Math.E+"");
-    	str=str.replace("¦Ð",Math.PI+"");
+    	str=str.replace("?",Math.PI+"");
         StringBuffer sb = new StringBuffer(str);  
         for (int i = 0; i < sb.length(); i++) {  
             char c = sb.charAt(i);  
@@ -29,8 +29,8 @@ public class CalcStr {
         
         str=sb.toString();
         str=str.replace("sin(", "s");
-        str=str.replace("©R(", "l");
-        str=str.replace("¡Ì(", "r");
+        str=str.replace("?(", "l");
+        str=str.replace("v(", "r");
         str=str.replace("lg(", "L");
         System.out.println(str);
         return str;
