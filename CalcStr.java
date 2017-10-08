@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
   
 public class CalcStr {  
   
-    static String operator = "+-*/%^()s";    
+    static String operator = "+-*/%^()slrL";    
     public static String pretreatment(String str) {
     	str=str.replace("÷", "/");
     	str=str.replaceAll("×", "*");
@@ -32,11 +32,10 @@ public class CalcStr {
         str=str.replace("㏑(", "l");
         str=str.replace("√(", "r");
         str=str.replace("lg(", "L");
-        System.out.println(str);
         return str;
     }   
     public static int opcompare(char op1, char op2) {  
-        if (op1 == '('||op1=='s') {   
+        if (op1 == '('||op1=='s'||op1=='l'||op1=='r'||op1=='L') {   
             return 1;  
         }  
         if ('^' == op1) {  
@@ -82,13 +81,21 @@ public class CalcStr {
                     break;
                 case 's':
                 	stack.push(c);
+                case 'l':
+                	stack.push(c);
+                	break;
+                case 'r':
+                	stack.push(c);
+                	break;
+                case 'L':
+                	stack.push(c);
                 	break;
                 case ')':  
                     while (stack.size() > 0) {  
                         char op = stack.pop();  
                         if (op != '(') {  
                             polish.offer(String.valueOf(op));
-                            if(op=='s')break;
+                            if(op=='s'||op=='l'||op=='r'||op=='L')break;
                         } else {  
                             break;  
                         }  
@@ -143,34 +150,48 @@ public class CalcStr {
         if (operator.indexOf(str) >= 0) {  
               
             double num2 = stack.pop();  
-            double num1 = stack.pop();  
+            double num1;  
             double tempresult = 0;  
             switch (str.charAt(0)) {  
-            case '+':  
+            case '+':
+            	num1=stack.pop();
                 tempresult = num1 + num2;  
                 break;  
-            case '-':  
+            case '-':
+            	num1=stack.pop();
                 tempresult = num1 - num2;  
                 break;  
-            case '*':  
+            case '*':
+            	num1=stack.pop();
                 tempresult = num1 * num2;  
                 break;  
-            case '/':  
+            case '/':
+            	num1=stack.pop();
                 if(num2 == 0)  
                 {  
                     throw new Exception("Error: divisor is 0");  
                 }  
                 tempresult = num1 / num2;  
                 break;  
-            case '%':  
+            case '%':
+            	num1=stack.pop();
                 tempresult = num1 % num2;  
                 break;  
-            case '^':  
+            case '^':
+            	num1=stack.pop();
                 tempresult = Math.pow(num1, num2);  
                 break;
             case 's':
             	tempresult=Math.sin(num2);
-            	stack.push(num1);
+            	break;
+            case 'l':
+            	tempresult=Math.log(num2);
+            	break;
+            case 'r':
+            	tempresult=Math.sqrt(num2);
+            	break;
+            case 'L':
+            	tempresult=Math.log10(num2);
             	break;
             default:  
                 throw new Exception("Operator:" + str + "unrecognized!");  
