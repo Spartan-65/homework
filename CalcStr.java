@@ -11,6 +11,8 @@ public class CalcStr {
     public static String pretreatment(String str) {
     	str=str.replace("÷", "/");
     	str=str.replaceAll("×", "*");
+    	str=str.replace("e", Math.E+"");
+    	str=str.replace("π",Math.PI+"");
         StringBuffer sb = new StringBuffer(str);  
         for (int i = 0; i < sb.length(); i++) {  
             char c = sb.charAt(i);  
@@ -27,6 +29,10 @@ public class CalcStr {
         
         str=sb.toString();
         str=str.replace("sin(", "s");
+        str=str.replace("㏑(", "l");
+        str=str.replace("√(", "r");
+        str=str.replace("lg(", "L");
+        System.out.println(str);
         return str;
     }   
     public static int opcompare(char op1, char op2) {  
@@ -152,7 +158,7 @@ public class CalcStr {
             case '/':  
                 if(num2 == 0)  
                 {  
-                    throw new Exception("出错:除数为 0");  
+                    throw new Exception("Error: divisor is 0");  
                 }  
                 tempresult = num1 / num2;  
                 break;  
@@ -167,7 +173,7 @@ public class CalcStr {
             	stack.push(num1);
             	break;
             default:  
-                throw new Exception("运算符: " + str + " 未识别!");  
+                throw new Exception("Operator:" + str + "unrecognized!");  
             }  
             stack.push(tempresult);  
         } else {  
