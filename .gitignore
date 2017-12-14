@@ -1,3 +1,5 @@
 nohup.out
 db.sqlite3
 my.cnf
+.idea/
+DataServer/settings.py
