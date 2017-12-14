@@ -12,6 +12,7 @@ class Good(models.Model):
     sales = models.IntegerField('销量')
     stock = models.IntegerField('库存')
     price = models.FloatField('单价',default=0)
+    sort = models.CharField('类别',default='None',max_length=30)
     def delete(self, using=None, keep_parents=False):
         base = self.imge.path
         os.remove(base)
@@ -20,7 +21,7 @@ class Good(models.Model):
         return self.name
 
 class GoodAdmin(admin.ModelAdmin):
-    list_display = ['item_num','name','sales','stock','price']
+    list_display = ['item_num','name','sales','stock','price','sort']
     def save_model(self, request, obj, form, change):
         obj.user = request.user
         obj.save()

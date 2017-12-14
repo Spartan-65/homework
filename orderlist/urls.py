@@ -1,7 +1,8 @@
 from django.conf.urls import url
+from django.contrib import admin
 
 from good import views
 
 urlpatterns = [
-    url(r'^search/', views.search),
+    #url(r'^',admin.site.urls),
 ]

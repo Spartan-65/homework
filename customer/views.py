@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.hashers import check_password, make_password
-from django.http import HttpResponse
+from django.http import HttpResponse,Http404
 from django.shortcuts import render
 from customer.models import User
 # Create your views here.
@@ -11,6 +11,7 @@ def index(req):
 	return render(req,'index.html')
 
 def login(req):
+    if req.method != 'POST': return render(req, 'index.html')
     c = req.POST
     Q=User.objects.get(username=c['username'])
     pwd = Q.passwd
@@ -20,6 +21,7 @@ def login(req):
         return HttpResponse('0')
 
 def reg(req):
+    if req.method != 'POST': return
     c = req.POST
     if User.objects.filter(username=c['username']) :
         return HttpResponse('用户名已被使用')
