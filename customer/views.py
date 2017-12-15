@@ -30,3 +30,14 @@ def reg(req):
 	pwd = make_password(pwd)
 	User.objects.create(username=c['username'],email=c['email'],passwd=pwd)
 	return HttpResponse('1')
+
+def reset(req):
+	c = req.POST
+	if len(c['username']) == 0:
+		return HttpResponse('获取用户名失败')
+	user = User.objects.get(username=c['username'])
+	if check_password(c['oldpassword'],user.passwd) == False:
+		return HttpResponse('原始密码错误')
+	user.passwd = make_password(c['password'])
+	user.save()
+	return HttpResponse('1')
