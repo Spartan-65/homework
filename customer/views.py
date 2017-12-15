@@ -11,22 +11,22 @@ def index(req):
 	return render(req,'index.html')
 
 def login(req):
-    if req.method != 'POST': return render(req, 'index.html')
-    c = req.POST
-    Q=User.objects.get(username=c['username'])
-    pwd = Q.passwd
-    if check_password(c['password'],pwd):
-        return HttpResponse('1')
-    else :
-        return HttpResponse('0')
+	if req.method != 'POST': return render(req, 'index.html')
+	c = req.POST
+	if len(User.objects.filter(username=c['username']))==0:
+		return HttpResponse('用户不存在')
+	Q=User.objects.get(username=c['username'])
+	pwd = Q.passwd
+	if check_password(c['password'],pwd):
+		return HttpResponse('1')
+	else :
+		return HttpResponse('密码错误')
 
 def reg(req):
-    if req.method != 'POST': return
-    c = req.POST
-    if User.objects.filter(username=c['username']) :
-        return HttpResponse('用户名已被使用')
-	if c['pwd1']!=c['pwd2']:
-		return HttpResponse('两次密码不一致')
-    pwd = make_password(c['pwd1'])
-    User.objects.create(username=c['username'],email=c['email'],passwd=pwd)
-    return HttpResponse('1')
+	c = req.POST
+	if len(User.objects.filter(username=c['username']))>0 :
+		return HttpResponse('用户名已被使用')
+	pwd = c['password']
+	pwd = make_password(pwd)
+	User.objects.create(username=c['username'],email=c['email'],passwd=pwd)
+	return HttpResponse('1')
