@@ -16,22 +16,29 @@ def strip_json(data):
 			if j =='fields':
 				list_data.append(t[j])
 	data = str(list_data)
-	data = data.replace("u\'","\'")
-	data = data.replace("\'","\"")
+	data = data.replace("u'","'")
+	#data = data.replace("u\"","\"")
+	data = data.replace("'","\"")
 	return data
 
 
 def search(req):
 	if req.method == 'GET':
 		data = serializers.serialize('json',Good.objects.all())
-		return HttpResponse(data)
+		return HttpResponse(strip_json(data))
 	else:
 		c=req.POST
-		data = Good.objects.filter(item_num__contains=c['item_num'],name__contains=c['name'],sort__contains=c['sort'])
+		o_list=c['data'].split()
+		data = Good.objects.filter(name__contains=o_list[0])	
+		if len(o_list) >1:
+			data = Good.objects.filter(name__contains=o_list[0],sort__contains=o_list[1])
+		else:
+			data = Good.objects.filter(name__contains=o_list[0])
+			data = (data|Good.objects.filter(sort__contains=o_list[0]))
 		o = c['paixu']
 		if len(o) > 0:
-			data = data.order_by[o]
+			data = data.order_by(o)
 		data = serializers.serialize('json',data)
-		return HttpResponse(data)
+		return HttpResponse(strip_json(data))
 
 	

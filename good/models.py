@@ -21,7 +21,7 @@ class Good(models.Model):
         return self.name
 
 class GoodAdmin(admin.ModelAdmin):
-    list_display = ['item_num','name','sales','stock','price','sort']
+    list_display = ['__unicode__','sales','stock','price','sort']
     def save_model(self, request, obj, form, change):
         obj.user = request.user
         obj.save()

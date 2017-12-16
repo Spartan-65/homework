@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.http import HttpResponse,Http404
 from django.shortcuts import render
 from customer.models import User
+import re
 # Create your views here.
 
 def index(req):
@@ -30,7 +31,7 @@ def reg(req):
 	pwd = make_password(pwd)
 	User.objects.create(username=c['username'],email=c['email'],passwd=pwd)
 	return HttpResponse('1')
-
+	
 def reset(req):
 	c = req.POST
 	if len(c['username']) == 0:

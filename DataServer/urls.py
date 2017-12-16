@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^',include('customer.urls')),
     url(r'^customer/',include('customer.urls')),
 	url(r'^good/',include('good.urls')),
+	url(r'orderlist/',include('orderlist.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
