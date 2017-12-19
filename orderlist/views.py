@@ -13,7 +13,18 @@ def submit(req):
 	user = c['username']	
 	user = User.objects.get(username=user)
 	num = len(Order.objects.all())+1
-	good = Good.objects.get(name=c['good'])
-	data = Order( order_code=str(num),goodname = good,username=user)
+	good = Good.objects.get(name=c['name'])
+	data = Order(order_code=str(num),goodname = good,username=user,status=True)
 	data.save()
-	return 1
+	good.sales += 1
+	good.stock -= 1
+	good.save()
+	
+	return HttpRequest("1")
+
+def search(req):
+	c=req.POST
+	user = User.objects.get(username=c['user'])
+	Q=Order.objects.filter(username = user)
+	return HttpResponse("")
+	

@@ -27,6 +27,8 @@ def reg(req):
 	c = req.POST
 	if len(User.objects.filter(username=c['username']))>0 :
 		return HttpResponse('用户名已被使用')
+	e = c['email']
+	#if len(e)<7 or re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", e) == None: return HttpResponse('邮箱格式错误')
 	pwd = c['password']
 	pwd = make_password(pwd)
 	User.objects.create(username=c['username'],email=c['email'],passwd=pwd)
