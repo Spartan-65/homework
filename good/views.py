@@ -35,11 +35,8 @@ def search(req):
 		c=req.POST
 		o_list=c['data'].split()
 		data = Good.objects.filter(name__contains=o_list[0])	
-		if len(o_list) >1:
-			i = 0
-			l = len(o_list)
-			while i<l-1:
-				data = Good.objects.filter(name__contains=o_list[i],sort__contains=o_list[l-1])
+		if len(o_list)>1:
+			data = Good.objects.filter(name__contains=o_list[0],sort__contains=o_list[1])
 		else:
 			data = Good.objects.filter(name__contains=o_list[0])
 			data = (data|Good.objects.filter(sort__contains=o_list[0]))

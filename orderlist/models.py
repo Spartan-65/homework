@@ -10,9 +10,10 @@ class Order(models.Model):
 	order_code = models.CharField('订单号',max_length=20,primary_key=True)
 	good = models.ForeignKey(gm.Good,verbose_name='商品')
 	user = models.ForeignKey(cm.User,verbose_name='用户')
-	#link = good.values("imge")(blank=True)
+	link = models.CharField(blank=True,max_length=100)
 	adddate = models.DateTimeField('购买时间',auto_now=True)
 	status = models.BooleanField('已支付',default='False')
+	goodname = models.CharField(blank=True,max_length=50)
 	def __unicode__(self):
 		return self.order_code
 
